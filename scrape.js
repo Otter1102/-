@@ -70,6 +70,19 @@ function extractAccess($) {
   return null;
 }
 
+function parseNearestStationFromAccess(access) {
+  if (!access || typeof access !== "string") return null;
+  const m = access.match(/([^\s]+駅)/);
+  return m ? m[1] : null;
+}
+
+function extractBuildingName($) {
+  if (!$) return null;
+  const title = $("title").text() || $('meta[property="og:title"]').attr("content") || "";
+  const t = title.replace(/\s*[｜|\-–].*$/, "").trim();
+  return t || null;
+}
+
 function extractGas($) {
   const text = $("body").text();
   if (/都市ガス/.test(text)) return "都市ガス";
@@ -151,6 +164,8 @@ async function scrapeOne(source) {
   const item = {
     name: source.name,
     url: source.url,
+    buildingName: fallback.buildingName ?? null,
+    nearestStation: fallback.nearestStation ?? null,
     price: fallback.price ?? null,
     layout: fallback.layout ?? null,
     area: fallback.area ?? null,
@@ -167,9 +182,15 @@ async function scrapeOne(source) {
     internet: fallback.internet ?? null,
     images: [],
   };
-  if (!html) return item;
+  if (!html) {
+    item.nearestStation = item.nearestStation || parseNearestStationFromAccess(item.access);
+    return item;
+  }
   const $ = parseWithCheerio(html);
-  if (!$) return item;
+  if (!$) {
+    item.nearestStation = item.nearestStation || parseNearestStationFromAccess(item.access);
+    return item;
+  }
   item.price = extractPrice($) ?? item.price;
   const scrapedLayout = extractLayout($);
   if (scrapedLayout && scrapedLayout !== "K") item.layout = scrapedLayout;
@@ -186,6 +207,8 @@ async function scrapeOne(source) {
   item.tokishiAccess = fallback.tokishiAccess ?? null;
   item.internet = extractInternet($) ?? item.internet;
   item.images = extractImages($, source.url);
+  item.nearestStation = item.nearestStation || parseNearestStationFromAccess(item.access);
+  if (!item.buildingName) item.buildingName = extractBuildingName($) || null;
   return item;
 }
 
@@ -209,23 +232,27 @@ async function main() {
       console.log(`OK (images: ${(item.images && item.images.length) || 0})`);
     } catch (e) {
       console.log("Fallback (error: " + e.message + ")");
+      const fb = s.fallback || {};
+      const access = fb.access || null;
       data.push({
         name: s.name,
         url: s.url,
-        price: (s.fallback && s.fallback.price) || null,
-        layout: (s.fallback && s.fallback.layout) || null,
-        area: (s.fallback && s.fallback.area) || null,
-        access: (s.fallback && s.fallback.access) || null,
-        note: (s.fallback && s.fallback.note) || null,
-        gas: (s.fallback && s.fallback.gas) || null,
-        stove: (s.fallback && s.fallback.stove) ?? null,
-        ac: (s.fallback && s.fallback.ac) ?? null,
-        structure: (s.fallback && s.fallback.structure) || null,
-        walkMinutes: (s.fallback && s.fallback.walkMinutes) ?? null,
-        shigaAccess: (s.fallback && s.fallback.shigaAccess) || null,
-        nagoyaAccess: (s.fallback && s.fallback.nagoyaAccess) || null,
-        tokishiAccess: (s.fallback && s.fallback.tokishiAccess) || null,
-        internet: (s.fallback && s.fallback.internet) || null,
+        buildingName: fb.buildingName || null,
+        nearestStation: fb.nearestStation || parseNearestStationFromAccess(access),
+        price: fb.price || null,
+        layout: fb.layout || null,
+        area: fb.area || null,
+        access: access,
+        note: fb.note || null,
+        gas: fb.gas || null,
+        stove: fb.stove ?? null,
+        ac: fb.ac ?? null,
+        structure: fb.structure || null,
+        walkMinutes: fb.walkMinutes ?? null,
+        shigaAccess: fb.shigaAccess || null,
+        nagoyaAccess: fb.nagoyaAccess || null,
+        tokishiAccess: fb.tokishiAccess || null,
+        internet: fb.internet || null,
         images: [],
       });
     }

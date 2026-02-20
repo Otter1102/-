@@ -24,12 +24,23 @@
     const b = [];
     if (item.gas) b.push(`<span class="badge badge-gas">${escapeHtml(item.gas)}</span>`);
     if (item.stove !== null && item.stove !== undefined)
-      b.push(`<span class="badge">コンロ${item.stove ? "あり" : "なし"}</span>`);
+      b.push(`<span class="badge badge-stove">コンロ${item.stove ? "あり" : "なし"}</span>`);
     if (item.ac !== null && item.ac !== undefined)
-      b.push(`<span class="badge">エアコン${item.ac ? "あり" : "なし"}</span>`);
+      b.push(`<span class="badge badge-ac">エアコン${item.ac ? "あり" : "なし"}</span>`);
     if (item.internet)
       b.push(`<span class="badge badge-net">ネット${escapeHtml(item.internet)}</span>`);
     return b.length ? `<div class="card-badges">${b.join("")}</div>` : "";
+  }
+
+  function nearestStationLabel(item) {
+    const station = item.nearestStation || (item.access && item.access.match(/([^\s]+駅)/) && item.access.match(/([^\s]+駅)/)[1]);
+    let min = item.walkMinutes;
+    if (min == null && item.access) {
+      const m = item.access.match(/徒歩\s*(\d+)\s*分/);
+      if (m) min = parseInt(m[1], 10);
+    }
+    if (!station) return min != null ? `徒歩${min}分` : "";
+    return min != null ? `${station}（徒歩${min}分）` : station;
   }
 
   function renderCard(item, index) {
@@ -41,13 +52,14 @@
       )
       .join("\n");
 
+    const nearestLabel = nearestStationLabel(item);
     const specs = [
       specRow("賃料", item.price),
       specRow("間取り", item.layout),
       specRow("専有面積", item.area),
       specRow("構造", item.structure),
       specRow("アクセス", item.access),
-      item.walkMinutes != null ? specRow("最寄り駅（徒歩）", "徒歩" + item.walkMinutes + "分") : "",
+      nearestLabel ? specRow("最寄り駅", nearestLabel) : "",
       specRow("最寄→志賀本通駅", item.shigaAccess),
       specRow("最寄→名古屋駅", item.nagoyaAccess),
       specRow("最寄→土岐市（岐阜）", item.tokishiAccess),
@@ -56,6 +68,9 @@
     ]
       .filter(Boolean)
       .join("");
+
+    const titleName = item.buildingName || item.name;
+    const subtitleHtml = nearestLabel ? `<p class="card-nearest">${escapeHtml(nearestLabel)}</p>` : "";
 
     return `
       <article class="card" data-area="${escapeHtml(item.name)}">
@@ -70,7 +85,8 @@
           </div>
         </div>
         <div class="card-body">
-          <h2 class="card-area">${escapeHtml(item.name)}</h2>
+          <h2 class="card-area">${escapeHtml(titleName)}</h2>
+          ${subtitleHtml}
           ${badges(item)}
           <dl class="card-specs">${specs}</dl>
           <a href="${escapeHtml(item.url)}" class="link" target="_blank" rel="noopener">詳細を見る</a>
