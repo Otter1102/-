@@ -156,6 +156,7 @@
       console.error(err);
     });
 
+  // 右下ボタン：クリックで一番上にスムーススクロール
   var scrollTopBtn = document.getElementById("scroll-top-btn");
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener("click", function (e) {
