@@ -45,9 +45,23 @@ npm run build
 
 ## 公開（Vercel）※ルート直でサイト表示・メモは非公開
 
-- **Root Directory**: 必ず **`vault/08プライベート/物件情報/サイト`** にすること。
-- デプロイ時に `npm install && npm run build` が実行され、その時点の物件サイトからスクレイピングして data.json が更新される。
+- **Root Directory**: 必ず **`vault/08プライベート/物件情報/サイト`** にすること（リポジトリがVault全体の場合）。
+- デプロイ時に `npm install && npm run build` が実行され、その時点の物件サイトからスクレイピングして **data.json が毎回新規生成**される。
 - 設定後は **Redeploy** で反映。
+
+### 中身が更新されないとき
+
+1. **Vercel が参照しているリポジトリを確認**  
+   変更を加えているリポジトリと、Vercel の「Settings → Git」で接続しているリポジトリ・ブランチが同じか確認する。別リポなら、更新しているほうを push したあと、そのリポを Vercel に接続するか、接続済みリポに手動で反映する。
+
+2. **キャッシュを外して再デプロイ**  
+   Vercel の **Deployments** → 最新のデプロイの「⋯」→ **Redeploy** を選び、**「Clear cache and deploy」** にチェックして実行。これでビルドがやり直され、`npm run build`（＝スクレイプ）が必ず実行される。
+
+3. **ビルドログでスクレイプ実行を確認**  
+   同じ Deployments の **Building** ログを開き、`Wrote data.json` や `Scraping ○○... OK` が出ているか確認。出ていなければスクレイプが失敗している（ネットエラーや Node バージョンなど）。
+
+4. **手動でスクレイプしてから push（応急）**  
+   ローカルで `npm run build` を実行し、できた **data.json** をコミットして push しても、その時点の内容でサイトが更新される。
 
 ## ファイル
 
