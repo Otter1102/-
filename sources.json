@@ -20,3 +20,4 @@
     "fallback": { "layout": "LDK", "note": "コンクリート打ちっぱなし" }
   }
 ]
+   {"name":"エリア名","url":"https://www.limited-nagoya.jp/rooms/xxxxx/","fallback":{"price":"○万円","layout":"1LDK", ...}}
