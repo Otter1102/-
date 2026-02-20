@@ -1,7 +1,20 @@
 # 物件情報サイト（構築用）
 
-- **データ**: 物件は **sources.json** のURLからビルド時にスクレイピングし、**data.json** を生成。サイトは data.json を読んで表示する。
-- **メモ**: ひとつ上の **メモ.txt** を更新したら、**sources.json** の該当URL・fallback を合わせて更新し、ビルドし直す。
+- **データ**: 物件は **sources.json** のURLからスクレイピングし、**data.json** を生成。サイトは data.json を読んで表示する。
+- **間取り**はページ内の「間取り」表記付近から取得（1LDK 等を正確に表示）。
+- **インターネット/Wi-Fi** の有無・無料も取得して表示。
+
+## メモが増えた時（新規物件を追加したい）
+
+1. ひとつ上の **メモ.txt** に物件メモを追加する。
+2. **sources.json** に1件追加する（`name`, `url`, `fallback` に価格・間取りなど可能な範囲で）。
+3. 変更を **GitHub に push** する。
+4. **30分以内**に GitHub Actions がスクレイプを実行して data.json を更新し、Vercel が自動で再デプロイする。すぐ反映したい場合は Vercel で「Redeploy」するか、Actions の「Run workflow」で手動実行。
+
+## 30分ごとの自動更新（無料）
+
+- **.github/workflows/scrape.yml** をリポジトリに含めて push すると、**30分ごと**に GitHub Actions がスクレイプを実行し、**data.json** を更新して push する。
+- Vercel は GitHub の push を検知して自動で再デプロイするため、**手動でアップし直す必要はない**（すべて無料の範囲で動作）。
 
 ## 閲覧（ローカル）
 
