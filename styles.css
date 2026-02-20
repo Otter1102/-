@@ -329,3 +329,16 @@ body {
 .footer p {
   margin: 0;
 }
+
+.footer-otter {
+  margin-top: 1.25rem !important;
+}
+
+.footer-otter img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid var(--marble-dark);
+}
