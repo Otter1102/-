@@ -6,7 +6,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const OUT_DIR = path.resolve(__dirname, "..");
+   const OUT_DIR = process.cwd();
 const SOURCES_PATH = path.join(OUT_DIR, "sources.json");
 const DATA_PATH = path.join(OUT_DIR, "data.json");
 
