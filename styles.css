@@ -41,16 +41,15 @@ body {
   font-family: var(--font-sans);
   font-weight: 400;
   color: var(--text-primary);
-  background: var(--marble-bg);
-  background-image:
-    radial-gradient(ellipse 140% 100% at 10% 20%, rgba(235, 232, 228, 0.9) 0%, transparent 45%),
-    radial-gradient(ellipse 100% 140% at 90% 80%, rgba(220, 218, 215, 0.7) 0%, transparent 45%),
-    radial-gradient(ellipse 80% 80% at 50% 50%, var(--marble-vein) 0%, transparent 60%),
-    linear-gradient(135deg, #f8f7f5 0%, #f0eeeb 40%, #eae8e5 100%);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 200% 200%;
-  background-position: 0 0, 0 0, 0 0, 0% 50%;
-  animation: gradient-flow 18s ease-in-out infinite;
   min-height: 100vh;
+  /* 大理石画像を固定（スクロール時も動かず、コンテンツが上に流れる＝ついてくるような高級感） */
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(250, 250, 249, 0.92) 30%, rgba(250, 250, 249, 0.85) 100%),
+    url("bg-marble.png");
+  background-size: 100% 100%, cover;
+  background-position: 0 0, center top;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: scroll, fixed;
 }
 
 .page {

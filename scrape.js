@@ -193,9 +193,18 @@ async function main() {
   const sources = JSON.parse(fs.readFileSync(SOURCES_PATH, "utf8"));
   const data = [];
   for (const s of sources) {
+    const nameAlreadyExists = data.some((d) => d.name === s.name);
+    if (nameAlreadyExists) {
+      console.log(`Skip (duplicate name): ${s.name}`);
+      continue;
+    }
     process.stdout.write(`Scraping ${s.name}... `);
     try {
       const item = await scrapeOne(s);
+      if (data.some((d) => d.name === item.name)) {
+        console.log(`Skip (duplicate name): ${item.name}`);
+        continue;
+      }
       data.push(item);
       console.log(`OK (images: ${(item.images && item.images.length) || 0})`);
     } catch (e) {
