@@ -1,17 +1,17 @@
-/* 高級感・白の代理石（マーブル）デザイン */
+/* ポップで子供っぽく可愛いデザイン（ハムスター・パステル） */
 
 :root {
-  --marble-bg: #fafaf9;
-  --marble-vein: rgba(220, 218, 215, 0.6);
-  --marble-dark: #e8e6e3;
-  --text-primary: #1c1b19;
-  --text-secondary: #57534e;
-  --accent: #a8a29e;
-  --card-bg: #ffffff;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  --radius: 12px;
-  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
-  --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  --bg-soft: rgba(255, 252, 250, 0.85);
+  --card-bg: #fffefc;
+  --card-border: rgba(255, 182, 193, 0.5);
+  --text-primary: #5c4a4a;
+  --text-secondary: #8b7355;
+  --accent-pink: #ffb6c1;
+  --accent-mint: #b5e8d9;
+  --accent-cream: #fff5e6;
+  --shadow: 0 4px 20px rgba(255, 182, 193, 0.25);
+  --radius: 20px;
+  --font-rounded: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif;
 }
 
 *,
@@ -25,32 +25,18 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-@keyframes marble-shift {
-  0%, 100% { opacity: 0.5; transform: translate(0, 0) scale(1); }
-  33% { opacity: 0.7; transform: translate(2%, 1%) scale(1.02); }
-  66% { opacity: 0.5; transform: translate(-1%, 2%) scale(0.98); }
-}
-
-@keyframes gradient-flow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
 body {
   margin: 0;
-  font-family: var(--font-sans);
-  font-weight: 400;
+  font-family: var(--font-rounded);
+  font-weight: 500;
   color: var(--text-primary);
   min-height: 100vh;
-  /* 大理石画像を固定（スクロール時も動かず＝ついてくるような高級感）。オーバーレイは薄めで石目を残す */
-  background-color: #f5f4f2;
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(252, 252, 251, 0.5) 50%, rgba(250, 250, 249, 0.6) 100%),
-    url("./bg-marble.png");
-  background-size: 100% 100%, cover;
-  background-position: 0 0, center center;
-  background-repeat: no-repeat, no-repeat;
-  background-attachment: scroll, fixed;
+  background-color: #ffeef2;
+  background-image: url("./bg-pastel.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .page {
@@ -63,22 +49,23 @@ body {
 .header {
   text-align: center;
   padding: 2rem 0 2.5rem;
-  border-bottom: 1px solid var(--marble-dark);
+  border-bottom: 3px dashed rgba(255, 182, 193, 0.6);
 }
 
 .logo {
-  font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--text-primary);
-  margin: 0 0 0.25rem;
+  font-family: var(--font-rounded);
+  font-size: clamp(1.85rem, 4.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #c9706e;
+  margin: 0 0 0.35rem;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .tagline {
-  font-size: 0.8rem;
-  font-weight: 300;
-  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   color: var(--text-secondary);
   margin: 0;
 }
@@ -96,7 +83,7 @@ body {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
-  border: 1px solid var(--marble-dark);
+  border: 2px solid var(--card-border);
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "images body";
@@ -113,7 +100,7 @@ body {
 .card-images {
   grid-area: images;
   position: relative;
-  background: var(--marble-dark);
+  background: var(--accent-cream);
 }
 
 .card-body {
@@ -130,99 +117,108 @@ body {
 }
 
 .card-area {
-  font-family: var(--font-serif);
+  font-family: var(--font-rounded);
   font-size: 1.35rem;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 0.25rem;
-  color: var(--text-primary);
+  color: #b85c5a;
 }
 
 .card-nearest {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--text-secondary);
   margin: 0 0 0.5rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .card-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 0.5rem;
+  gap: 0.4rem 0.6rem;
   margin-bottom: 0.75rem;
 }
 
 .badge {
-  font-size: 0.7rem;
-  padding: 0.28rem 0.55rem;
-  border-radius: 6px;
-  font-weight: 500;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 700;
   white-space: nowrap;
 }
 
 .badge-gas {
-  background: rgba(147, 197, 253, 0.45);
-  color: #1e40af;
+  background: linear-gradient(135deg, #a8e6ff 0%, #7dd3fc 100%);
+  color: #0c5a7a;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .badge-stove {
-  background: rgba(254, 215, 170, 0.6);
-  color: #9a3412;
+  background: linear-gradient(135deg, #ffd6a5 0%, #ffb380 100%);
+  color: #8b4513;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .badge-ac {
-  background: rgba(165, 243, 252, 0.5);
-  color: #0e7490;
+  background: linear-gradient(135deg, #b5f0e8 0%, #7dd3fc 100%);
+  color: #0e6b6b;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .badge-net {
-  background: rgba(187, 247, 208, 0.55);
+  background: linear-gradient(135deg, #c8f7c5 0%, #9ae6a0 100%);
   color: #166534;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .card-specs {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.2rem 1rem;
+  gap: 0.25rem 1rem;
   margin: 0 0 1rem;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
 }
 
 @media (max-width: 700px) {
-  .card-specs { font-size: 0.8rem; gap: 0.15rem 0.75rem; }
+  .card-specs { font-size: 0.82rem; gap: 0.2rem 0.75rem; }
   .card-badges { margin-bottom: 0.5rem; }
-  .badge { font-size: 0.65rem; padding: 0.2rem 0.4rem; }
+  .badge { font-size: 0.68rem; padding: 0.25rem 0.5rem; }
 }
 
 .card-specs dt {
   color: var(--text-secondary);
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .card-specs dd {
   margin: 0;
   color: var(--text-primary);
+  font-weight: 500;
 }
 
 .card-specs .price {
-  font-weight: 500;
-  font-size: 1.05rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #c9706e;
 }
 
 .link {
   display: inline-block;
   margin-top: auto;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+  padding: 0.55rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
   text-decoration: none;
-  border: 1px solid var(--marble-dark);
-  border-radius: 6px;
-  transition: background 0.2s, color 0.2s;
+  background: linear-gradient(135deg, #ffb6c1 0%, #ff9aab 100%);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 3px 12px rgba(255, 182, 193, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .link:hover {
-  background: var(--marble-bg);
-  color: var(--text-primary);
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(255, 182, 193, 0.6);
 }
 
 /* Carousel */
@@ -265,22 +261,22 @@ body {
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border: none;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.95);
+  color: #ff9aab;
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(255, 182, 193, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .carousel-btn:hover {
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 16px rgba(255, 182, 193, 0.5);
 }
 
 .carousel-btn.prev {
@@ -291,29 +287,18 @@ body {
   right: 12px;
 }
 
-.carousel-dots {
-  position: absolute;
-  bottom: 12px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  z-index: 2;
-}
-
 .carousel-dots .dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
 
 .carousel-dots .dot.active {
-  background: #fff;
+  background: #ffb6c1;
   transform: scale(1.2);
 }
 
@@ -321,9 +306,10 @@ body {
 .footer {
   text-align: center;
   padding: 1.5rem;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 500;
   color: var(--text-secondary);
-  border-top: 1px solid var(--marble-dark);
+  border-top: 3px dashed rgba(255, 182, 193, 0.6);
 }
 
 .footer p {
@@ -340,10 +326,11 @@ body {
   object-fit: cover;
   border-radius: 50%;
   display: inline-block;
-  border: 2px solid var(--marble-dark);
+  border: 3px solid var(--accent-pink);
+  box-shadow: 0 4px 16px rgba(255, 182, 193, 0.4);
 }
 
-/* 右下：トップへ戻るボタン（スマホ・PC共通） */
+/* 右下：トップへ戻る（ハムスター） */
 .scroll-top-btn {
   position: fixed;
   right: 20px;
@@ -373,7 +360,7 @@ body {
 .scroll-top-btn:active {
   outline: none;
   transform: rotate(15deg);
-  filter: drop-shadow(0 0 12px rgba(255, 220, 150, 0.9)) drop-shadow(0 0 24px rgba(255, 200, 100, 0.5));
+  filter: drop-shadow(0 0 14px rgba(255, 182, 193, 0.9)) drop-shadow(0 0 28px rgba(255, 200, 150, 0.6));
 }
 
 @media (max-width: 700px) {
