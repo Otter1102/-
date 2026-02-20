@@ -155,4 +155,12 @@
         '<p class="loading">データの読み込みに失敗しました。ビルド（<code>npm run build</code>）を実行して data.json を生成してください。</p>';
       console.error(err);
     });
+
+  var scrollTopBtn = document.getElementById("scroll-top-btn");
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 })();
