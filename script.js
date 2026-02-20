@@ -48,7 +48,9 @@
       specRow("構造", item.structure),
       specRow("アクセス", item.access),
       item.walkMinutes != null ? specRow("最寄り駅（徒歩）", "徒歩" + item.walkMinutes + "分") : "",
-      specRow("志賀本通駅", item.shigaAccess),
+      specRow("最寄→志賀本通駅", item.shigaAccess),
+      specRow("最寄→名古屋駅", item.nagoyaAccess),
+      specRow("最寄→土岐市（岐阜）", item.tokishiAccess),
       specRow("インターネット", item.internet),
       specRow("備考", item.note),
     ]

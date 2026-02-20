@@ -1,9 +1,9 @@
 [
-  {"name":"大曽根・平安通①","url":"https://www.limited-nagoya.jp/rooms/50579/","fallback":{"price":"8万円","layout":"1LDK","area":"40.85m²","access":"地下鉄名城線 大曽根駅 徒歩6分","note":"コスパいい、広め","gas":"プロパン","stove":true,"ac":true,"structure":"木造","walkMinutes":6,"internet":"無料"}},
-  {"name":"大曽根・平安通②","url":"https://www.limited-nagoya.jp/rooms/3778/","fallback":{"layout":"1LDK","access":"大曽根 徒歩5分","walkMinutes":5}},
-  {"name":"志賀本通①","url":"https://www.limited-nagoya.jp/rooms/40513/","fallback":{"price":"8万円","layout":"1LDK","note":"コスパいい、窓多め、コンロ3つ","stove":true,"walkMinutes":6}},
-  {"name":"黒川①","url":"https://www.limited-nagoya.jp/rooms/49692/","fallback":{"price":"10万円","layout":"1LDK","area":"47.78m²","access":"黒川駅 徒歩1分","walkMinutes":1}},
-  {"name":"砂田橋①","url":"https://www.limited-nagoya.jp/rooms/37639/","fallback":{"price":"10〜11万円","layout":"1LDK","access":"砂田橋 徒歩5分","note":"窓大きめ、悪くない","walkMinutes":5}},
-  {"name":"鶴舞①","url":"https://www.limited-nagoya.jp/rooms/1557/","fallback":{"layout":"LDK","note":"コンクリート打ちっぱなし","structure":"RC"}},
-  {"name":"森下①","url":"https://www.limited-nagoya.jp/rooms/33098/","fallback":{"price":"11万円","layout":"1LDK","note":"広い、綺麗、窓多め、値段少し張るが綺麗"}}
+  {"name":"大曽根・平安通①","url":"https://www.limited-nagoya.jp/rooms/50579/","fallback":{"price":"8万円","layout":"1LDK","area":"40.85m²","access":"地下鉄名城線 大曽根駅 徒歩6分","note":"コスパいい、広め","gas":"プロパン","stove":true,"ac":true,"structure":"木造","walkMinutes":6,"internet":"無料","shigaAccess":"約3分","nagoyaAccess":"約21分","tokishiAccess":"約66分"}},
+  {"name":"大曽根・平安通②","url":"https://www.limited-nagoya.jp/rooms/3778/","fallback":{"layout":"1LDK","access":"大曽根 徒歩5分","walkMinutes":5,"shigaAccess":"約3分","nagoyaAccess":"約21分","tokishiAccess":"約66分"}},
+  {"name":"志賀本通①","url":"https://www.limited-nagoya.jp/rooms/40513/","fallback":{"price":"8万円","layout":"1LDK","note":"コスパいい、窓多め、コンロ3つ","stove":true,"walkMinutes":6,"shigaAccess":"約0分（最寄）","nagoyaAccess":"約18分","tokishiAccess":"約63分"}},
+  {"name":"黒川①","url":"https://www.limited-nagoya.jp/rooms/49692/","fallback":{"price":"10万円","layout":"1LDK","area":"47.78m²","access":"黒川駅 徒歩1分","walkMinutes":1,"shigaAccess":"約2分","nagoyaAccess":"約20分","tokishiAccess":"約65分"}},
+  {"name":"砂田橋①","url":"https://www.limited-nagoya.jp/rooms/37639/","fallback":{"price":"10〜11万円","layout":"1LDK","access":"砂田橋 徒歩5分","note":"窓大きめ、悪くない","walkMinutes":5,"shigaAccess":"約8分","nagoyaAccess":"約26分","tokishiAccess":"約71分"}},
+  {"name":"鶴舞①","url":"https://www.limited-nagoya.jp/rooms/1557/","fallback":{"layout":"LDK","note":"コンクリート打ちっぱなし","structure":"RC","shigaAccess":"約13分","nagoyaAccess":"約8分","tokishiAccess":"約53分"}},
+  {"name":"森下①","url":"https://www.limited-nagoya.jp/rooms/33098/","fallback":{"price":"11万円","layout":"1LDK","note":"広い、綺麗、窓多め、値段少し張るが綺麗","shigaAccess":"約4分","nagoyaAccess":"約10分","tokishiAccess":"約55分"}}
 ]

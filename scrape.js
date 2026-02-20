@@ -162,6 +162,8 @@ async function scrapeOne(source) {
     structure: fallback.structure ?? null,
     walkMinutes: fallback.walkMinutes ?? null,
     shigaAccess: fallback.shigaAccess ?? null,
+    nagoyaAccess: fallback.nagoyaAccess ?? null,
+    tokishiAccess: fallback.tokishiAccess ?? null,
     internet: fallback.internet ?? null,
     images: [],
   };
@@ -180,6 +182,8 @@ async function scrapeOne(source) {
   item.structure = extractStructure($) ?? item.structure;
   item.walkMinutes = extractWalkMinutes($) ?? item.walkMinutes;
   item.shigaAccess = extractShigaAccess($) ?? item.shigaAccess;
+  item.nagoyaAccess = fallback.nagoyaAccess ?? null;
+  item.tokishiAccess = fallback.tokishiAccess ?? null;
   item.internet = extractInternet($) ?? item.internet;
   item.images = extractImages($, source.url);
   return item;
@@ -210,6 +214,8 @@ async function main() {
         structure: (s.fallback && s.fallback.structure) || null,
         walkMinutes: (s.fallback && s.fallback.walkMinutes) ?? null,
         shigaAccess: (s.fallback && s.fallback.shigaAccess) || null,
+        nagoyaAccess: (s.fallback && s.fallback.nagoyaAccess) || null,
+        tokishiAccess: (s.fallback && s.fallback.tokishiAccess) || null,
         internet: (s.fallback && s.fallback.internet) || null,
         images: [],
       });
