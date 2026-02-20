@@ -1,7 +1,7 @@
 [
-  {"name":"大曽根・平安通①","url":"https://www.limited-nagoya.jp/rooms/50579/","fallback":{"price":"8万円","layout":"1LDK","note":"コスパいい、広め","walkMinutes":6}},
-  {"name":"大曽根・平安通②","url":"https://www.limited-nagoya.jp/rooms/3778/","fallback":{"access":"大曽根 徒歩5分","layout":"1LDK","walkMinutes":5}},
-  {"name":"志賀本通①","url":"https://www.limited-nagoya.jp/rooms/40513/","fallback":{"price":"8万円","layout":"1LDK","note":"コスパいい、窓多め、コンロ3つ","walkMinutes":6}},
+  {"name":"大曽根・平安通①","url":"https://www.limited-nagoya.jp/rooms/50579/","fallback":{"price":"8万円","layout":"1LDK","area":"40.85m²","access":"地下鉄名城線 大曽根駅 徒歩6分","note":"コスパいい、広め","gas":"プロパン","stove":true,"ac":true,"structure":"木造","walkMinutes":6,"internet":"無料"}},
+  {"name":"大曽根・平安通②","url":"https://www.limited-nagoya.jp/rooms/3778/","fallback":{"layout":"1LDK","access":"大曽根 徒歩5分","walkMinutes":5}},
+  {"name":"志賀本通①","url":"https://www.limited-nagoya.jp/rooms/40513/","fallback":{"price":"8万円","layout":"1LDK","note":"コスパいい、窓多め、コンロ3つ","stove":true,"walkMinutes":6}},
   {"name":"黒川①","url":"https://www.limited-nagoya.jp/rooms/49692/","fallback":{"price":"10万円","layout":"1LDK","area":"47.78m²","access":"黒川駅 徒歩1分","walkMinutes":1}},
   {"name":"砂田橋①","url":"https://www.limited-nagoya.jp/rooms/37639/","fallback":{"price":"10〜11万円","layout":"1LDK","access":"砂田橋 徒歩5分","note":"窓大きめ、悪くない","walkMinutes":5}},
   {"name":"鶴舞①","url":"https://www.limited-nagoya.jp/rooms/1557/","fallback":{"layout":"LDK","note":"コンクリート打ちっぱなし","structure":"RC"}},

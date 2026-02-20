@@ -11,10 +11,18 @@
 3. 変更を **GitHub に push** する。
 4. **30分以内**に GitHub Actions がスクレイプを実行して data.json を更新し、Vercel が自動で再デプロイする。すぐ反映したい場合は Vercel で「Redeploy」するか、Actions の「Run workflow」で手動実行。
 
-## 30分ごとの自動更新（無料）
+## 30分ごとの自動更新（無料）※ファイル1つ追加するだけ
 
-- **.github/workflows/scrape.yml** をリポジトリに含めて push すると、**30分ごと**に GitHub Actions がスクレイプを実行し、**data.json** を更新して push する。
-- Vercel は GitHub の push を検知して自動で再デプロイするため、**手動でアップし直す必要はない**（すべて無料の範囲で動作）。
+フォルダはアップロードしなくてOK。**ファイルを1つ作る**だけで動きます。
+
+1. GitHub のリポジトリで **「Add file」→「Create new file」**
+2. **ファイル名**の欄に、次の**1行をそのまま**入力する：  
+   **`.github/workflows/scrape.yml`**  
+   （スラッシュを入れると、自動で .github と workflows のフォルダができ、その中に scrape.yml が1つできるだけ）
+3. **scrape-workflow.txt** の中身を**すべてコピー**して、編集エリアに貼り付ける
+4. **「Commit changes」** で保存
+
+これで 30分ごとにスクレイプが走り、data.json が更新されて push され、Vercel が再デプロイします（すべて無料）。
 
 ## 閲覧（ローカル）
 

@@ -25,6 +25,17 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+@keyframes marble-shift {
+  0%, 100% { opacity: 0.5; transform: translate(0, 0) scale(1); }
+  33% { opacity: 0.7; transform: translate(2%, 1%) scale(1.02); }
+  66% { opacity: 0.5; transform: translate(-1%, 2%) scale(0.98); }
+}
+
+@keyframes gradient-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -32,9 +43,13 @@ body {
   color: var(--text-primary);
   background: var(--marble-bg);
   background-image:
-    radial-gradient(ellipse 120% 80% at 20% 10%, var(--marble-vein) 0%, transparent 50%),
-    radial-gradient(ellipse 80% 120% at 80% 90%, var(--marble-vein) 0%, transparent 50%),
-    linear-gradient(180deg, #fafaf9 0%, #f5f4f2 100%);
+    radial-gradient(ellipse 140% 100% at 10% 20%, rgba(235, 232, 228, 0.9) 0%, transparent 45%),
+    radial-gradient(ellipse 100% 140% at 90% 80%, rgba(220, 218, 215, 0.7) 0%, transparent 45%),
+    radial-gradient(ellipse 80% 80% at 50% 50%, var(--marble-vein) 0%, transparent 60%),
+    linear-gradient(135deg, #f8f7f5 0%, #f0eeeb 40%, #eae8e5 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 200% 200%;
+  background-position: 0 0, 0 0, 0 0, 0% 50%;
+  animation: gradient-flow 18s ease-in-out infinite;
   min-height: 100vh;
 }
 
@@ -103,26 +118,63 @@ body {
 
 .card-body {
   grid-area: body;
-  padding: 1.5rem 1.75rem;
+  padding: 1.25rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (max-width: 700px) {
+  .card-body { padding: 1rem 1.25rem; }
+  .card { min-height: 280px; }
 }
 
 .card-area {
   font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 600;
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
   color: var(--text-primary);
+}
+
+.card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: var(--marble-dark);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.badge-gas {
+  background: rgba(180, 200, 220, 0.5);
+  color: #334155;
+}
+
+.badge-net {
+  background: rgba(200, 220, 180, 0.5);
+  color: #334155;
 }
 
 .card-specs {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.25rem 1.25rem;
+  gap: 0.2rem 1rem;
   margin: 0 0 1rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 700px) {
+  .card-specs { font-size: 0.8rem; gap: 0.15rem 0.75rem; }
+  .card-badges { margin-bottom: 0.5rem; }
+  .badge { font-size: 0.65rem; padding: 0.2rem 0.4rem; }
 }
 
 .card-specs dt {

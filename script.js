@@ -15,7 +15,21 @@
 
   function specRow(label, value) {
     if (value == null || value === "") return "";
-    return `<dt>${escapeHtml(label)}</dt><dd${label === "賃料" ? ' class="price"' : ""}>${escapeHtml(value)}</dd>`;
+    const isPrice = label === "賃料";
+    const val = typeof value === "boolean" ? (value ? "あり" : "なし") : String(value);
+    return `<dt>${escapeHtml(label)}</dt><dd${isPrice ? ' class="price"' : ""}>${escapeHtml(val)}</dd>`;
+  }
+
+  function badges(item) {
+    const b = [];
+    if (item.gas) b.push(`<span class="badge badge-gas">${escapeHtml(item.gas)}</span>`);
+    if (item.stove !== null && item.stove !== undefined)
+      b.push(`<span class="badge">コンロ${item.stove ? "あり" : "なし"}</span>`);
+    if (item.ac !== null && item.ac !== undefined)
+      b.push(`<span class="badge">エアコン${item.ac ? "あり" : "なし"}</span>`);
+    if (item.internet)
+      b.push(`<span class="badge badge-net">ネット${escapeHtml(item.internet)}</span>`);
+    return b.length ? `<div class="card-badges">${b.join("")}</div>` : "";
   }
 
   function renderCard(item, index) {
@@ -31,7 +45,11 @@
       specRow("賃料", item.price),
       specRow("間取り", item.layout),
       specRow("専有面積", item.area),
+      specRow("構造", item.structure),
       specRow("アクセス", item.access),
+      item.walkMinutes != null ? specRow("最寄り駅（徒歩）", "徒歩" + item.walkMinutes + "分") : "",
+      specRow("志賀本通駅", item.shigaAccess),
+      specRow("インターネット", item.internet),
       specRow("備考", item.note),
     ]
       .filter(Boolean)
@@ -51,6 +69,7 @@
         </div>
         <div class="card-body">
           <h2 class="card-area">${escapeHtml(item.name)}</h2>
+          ${badges(item)}
           <dl class="card-specs">${specs}</dl>
           <a href="${escapeHtml(item.url)}" class="link" target="_blank" rel="noopener">詳細を見る</a>
         </div>

@@ -1,16 +1,15 @@
 /**
  * Limited Nagoya 物件ページをスクレイピングし、data.json を生成する。
- * ビルド時に実行。取得失敗時は sources.json の fallback を使用。
+ * ルートに置く想定。取得失敗時は sources.json の fallback を使用。
  */
 
 const fs = require("fs");
 const path = require("path");
 
-   const OUT_DIR = process.cwd();
+const OUT_DIR = process.cwd();
 const SOURCES_PATH = path.join(OUT_DIR, "sources.json");
 const DATA_PATH = path.join(OUT_DIR, "data.json");
 
-// Node 18+ の fetch、なければ dynamic import で node-fetch
 async function loadFetch() {
   if (typeof globalThis.fetch === "function") return globalThis.fetch;
   const mod = await import("node-fetch");
@@ -51,8 +50,10 @@ function extractPrice($) {
 
 function extractLayout($) {
   const text = $("body").text();
-  const m = text.match(/(\d*LDK|\d*DK|\d*K|ワンルーム)/);
-  return m ? m[1] : null;
+  const nearLabel = text.match(/間取り\s*[：:]*\s*(\d?\s*LDK|\d?\s*DK|\d?\s*K|ワンルーム)/);
+  if (nearLabel) return nearLabel[1].replace(/\s/g, "");
+  const m = text.match(/(\d?\s*LDK|\d?\s*DK|\d?\s*K|ワンルーム)/);
+  return m ? m[1].replace(/\s/g, "") : null;
 }
 
 function extractArea($) {
@@ -69,15 +70,68 @@ function extractAccess($) {
   return null;
 }
 
+function extractGas($) {
+  const text = $("body").text();
+  if (/都市ガス/.test(text)) return "都市ガス";
+  if (/プロパン|LPガス/.test(text)) return "プロパン";
+  return null;
+}
+
+function extractStove($) {
+  const text = $("body").text();
+  if (/コンロ\s*[：:]\s*あり|コンロあり|ガスコンロ/.test(text)) return true;
+  if (/コンロ\s*[：:]\s*なし|コンロなし/.test(text)) return false;
+  if (/キッチン|バーナー/.test(text)) return true;
+  return null;
+}
+
+function extractAc($) {
+  const text = $("body").text();
+  if (/エアコン\s*[：:]\s*あり|エアコンあり|エアコン\s*\(\d+台\)|冷暖房/.test(text)) return true;
+  if (/エアコン\s*[：:]\s*なし|エアコンなし/.test(text)) return false;
+  if (/冷房|暖房/.test(text)) return true;
+  return null;
+}
+
+function extractInternet($) {
+  const text = $("body").text();
+  if (/インターネット\s*無料|無料\s*インターネット/.test(text)) return "無料";
+  if (/CATVインターネット|光\s*インターネット|インターネット\s*あり|Wi-Fi|ワイファイ/.test(text)) return "あり";
+  if (/インターネット\s*なし|インターネット\s*[：:]\s*なし/.test(text)) return "なし";
+  return null;
+}
+
+function extractStructure($) {
+  const text = $("body").text();
+  if (/RC|鉄筋コンクリート| Reinforced/.test(text)) return "RC";
+  if (/SRC|鉄骨鉄筋/.test(text)) return "SRC";
+  if (/木造|W造/.test(text)) return "木造";
+  if (/軽量鉄骨|S造/.test(text)) return "軽量鉄骨";
+  return null;
+}
+
+function extractWalkMinutes($) {
+  const text = $("body").text();
+  const m = text.match(/徒歩\s*(\d+)\s*分|最寄[り駅].*?(\d+)\s*分/);
+  if (m) return parseInt(m[1] || m[2], 10);
+  return null;
+}
+
+function extractShigaAccess($) {
+  const text = $("body").text();
+  const m = text.match(/志賀本通[駅]?[^\d]*(\d+)\s*分|志賀本[^\d]*(\d+)\s*分/);
+  if (m) return "志賀本通駅まで " + (m[1] || m[2]) + "分";
+  if (/志賀本通/.test(text)) return "志賀本通駅 記載あり";
+  return null;
+}
+
 function extractImages($, baseUrl) {
   const imgs = [];
   const base = new URL(baseUrl).origin;
-
   $('meta[property="og:image"]').each((_, el) => {
     const v = $(el).attr("content");
     if (v && !imgs.includes(v)) imgs.push(v.startsWith("http") ? v : base + v);
   });
-
   $(".gallery img, .slide img, .room-photo img, .property-photo img, [class*='gallery'] img, [class*='slide'] img, main img, .detail img")
     .slice(0, 10)
     .each((_, el) => {
@@ -88,7 +142,6 @@ function extractImages($, baseUrl) {
         if (src.startsWith("http") && !imgs.includes(src)) imgs.push(src);
       }
     });
-
   return imgs.slice(0, 8);
 }
 
@@ -103,20 +156,32 @@ async function scrapeOne(source) {
     area: fallback.area ?? null,
     access: fallback.access ?? null,
     note: fallback.note ?? null,
+    gas: fallback.gas ?? null,
+    stove: fallback.stove ?? null,
+    ac: fallback.ac ?? null,
+    structure: fallback.structure ?? null,
+    walkMinutes: fallback.walkMinutes ?? null,
+    shigaAccess: fallback.shigaAccess ?? null,
+    internet: fallback.internet ?? null,
     images: [],
   };
-
   if (!html) return item;
-
   const $ = parseWithCheerio(html);
   if (!$) return item;
-
   item.price = extractPrice($) ?? item.price;
-  item.layout = extractLayout($) ?? item.layout;
+  const scrapedLayout = extractLayout($);
+  if (scrapedLayout && scrapedLayout !== "K") item.layout = scrapedLayout;
+  else if (fallback.layout) item.layout = fallback.layout;
   item.area = extractArea($) ?? item.area;
   item.access = extractAccess($) ?? item.access;
+  item.gas = extractGas($) ?? item.gas;
+  item.stove = extractStove($) ?? item.stove;
+  item.ac = extractAc($) ?? item.ac;
+  item.structure = extractStructure($) ?? item.structure;
+  item.walkMinutes = extractWalkMinutes($) ?? item.walkMinutes;
+  item.shigaAccess = extractShigaAccess($) ?? item.shigaAccess;
+  item.internet = extractInternet($) ?? item.internet;
   item.images = extractImages($, source.url);
-
   return item;
 }
 
@@ -128,8 +193,7 @@ async function main() {
     try {
       const item = await scrapeOne(s);
       data.push(item);
-      const imgCount = (item.images && item.images.length) || 0;
-      console.log(`OK (images: ${imgCount})`);
+      console.log(`OK (images: ${(item.images && item.images.length) || 0})`);
     } catch (e) {
       console.log("Fallback (error: " + e.message + ")");
       data.push({
@@ -140,11 +204,17 @@ async function main() {
         area: (s.fallback && s.fallback.area) || null,
         access: (s.fallback && s.fallback.access) || null,
         note: (s.fallback && s.fallback.note) || null,
+        gas: (s.fallback && s.fallback.gas) || null,
+        stove: (s.fallback && s.fallback.stove) ?? null,
+        ac: (s.fallback && s.fallback.ac) ?? null,
+        structure: (s.fallback && s.fallback.structure) || null,
+        walkMinutes: (s.fallback && s.fallback.walkMinutes) ?? null,
+        shigaAccess: (s.fallback && s.fallback.shigaAccess) || null,
+        internet: (s.fallback && s.fallback.internet) || null,
         images: [],
       });
     }
   }
-
   fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2), "utf8");
   console.log("Wrote " + DATA_PATH);
 }
