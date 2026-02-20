@@ -1,0 +1,42 @@
+[
+  {
+    "name": "大曽根・平安通",
+    "url": "https://www.limited-nagoya.jp/rooms/50579/",
+    "price": "8万円",
+    "layout": "1LDK",
+    "area": null,
+    "access": null,
+    "note": "コスパいい、広め",
+    "images": []
+  },
+  {
+    "name": "黒川",
+    "url": "https://www.limited-nagoya.jp/rooms/49692/",
+    "price": "10万円",
+    "layout": "1LDK",
+    "area": "47.78m²",
+    "access": "黒川駅 徒歩1分",
+    "note": null,
+    "images": []
+  },
+  {
+    "name": "砂田橋",
+    "url": "https://www.limited-nagoya.jp/rooms/37639/",
+    "price": "10〜11万円",
+    "layout": "1LDK",
+    "area": null,
+    "access": "砂田橋 徒歩5分",
+    "note": "窓大きめ、悪くない",
+    "images": []
+  },
+  {
+    "name": "鶴舞",
+    "url": "https://www.limited-nagoya.jp/rooms/1557/",
+    "price": null,
+    "layout": "LDK",
+    "area": null,
+    "access": null,
+    "note": "コンクリート打ちっぱなし",
+    "images": []
+  }
+]

@@ -1,0 +1,263 @@
+/* 高級感・白の代理石（マーブル）デザイン */
+
+:root {
+  --marble-bg: #fafaf9;
+  --marble-vein: rgba(220, 218, 215, 0.6);
+  --marble-dark: #e8e6e3;
+  --text-primary: #1c1b19;
+  --text-secondary: #57534e;
+  --accent: #a8a29e;
+  --card-bg: #ffffff;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --radius: 12px;
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--marble-bg);
+  background-image:
+    radial-gradient(ellipse 120% 80% at 20% 10%, var(--marble-vein) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 120% at 80% 90%, var(--marble-vein) 0%, transparent 50%),
+    linear-gradient(180deg, #fafaf9 0%, #f5f4f2 100%);
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 48px) clamp(20px, 4vw, 32px);
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 2rem 0 2.5rem;
+  border-bottom: 1px solid var(--marble-dark);
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem;
+}
+
+.tagline {
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Cards */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 2rem 0 3rem;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--marble-dark);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "images body";
+  min-height: 320px;
+}
+
+@media (max-width: 700px) {
+  .card {
+    grid-template-columns: 1fr;
+    grid-template-areas: "images" "body";
+  }
+}
+
+.card-images {
+  grid-area: images;
+  position: relative;
+  background: var(--marble-dark);
+}
+
+.card-body {
+  grid-area: body;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-area {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+}
+
+.card-specs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 1.25rem;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+}
+
+.card-specs dt {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.card-specs dd {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.card-specs .price {
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+.link {
+  display: inline-block;
+  margin-top: auto;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border: 1px solid var(--marble-dark);
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.link:hover {
+  background: var(--marble-bg);
+  color: var(--text-primary);
+}
+
+/* Carousel */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+}
+
+.carousel-track {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+@media (max-width: 700px) {
+  .carousel-track {
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+}
+
+.carousel-slides {
+  display: flex;
+  height: 100%;
+  transition: transform 0.4s ease-out;
+}
+
+.carousel-slides img {
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.carousel-btn:hover {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-btn.prev {
+  left: 12px;
+}
+
+.carousel-btn.next {
+  right: 12px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 2;
+}
+
+.carousel-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.carousel-dots .dot.active {
+  background: #fff;
+  transform: scale(1.2);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--marble-dark);
+}
+
+.footer p {
+  margin: 0;
+}
